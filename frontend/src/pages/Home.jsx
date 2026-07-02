@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Home() {
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${API_URL}/api/message`)
@@ -29,7 +31,10 @@ function Home() {
           <a href="#">Contact</a>
         </div>
 
-        <button className="bg-purple-600 px-5 py-2 rounded-lg hover:bg-purple-700 transition">
+        <button
+          onClick={() => navigate("/login")}
+          className="bg-purple-600 px-5 py-2 rounded-lg hover:bg-purple-700 transition"
+        >
           Get Started
         </button>
       </nav>
@@ -55,7 +60,10 @@ function Home() {
 
         {/* Buttons */}
         <div className="flex gap-6 mt-10 flex-wrap justify-center">
-          <button className="bg-purple-600 px-8 py-4 rounded-xl text-lg hover:bg-purple-700 transition shadow-lg shadow-purple-700/30">
+          <button
+            onClick={() => navigate("/signup")}
+            className="bg-purple-600 px-8 py-4 rounded-xl text-lg hover:bg-purple-700 transition shadow-lg shadow-purple-700/30"
+          >
             Start Hiring
           </button>
 
