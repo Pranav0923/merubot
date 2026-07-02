@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function CandidateProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,9 +16,7 @@ function CandidateProfile() {
 
   const fetchCandidate = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/candidate/${id}`,
-      );
+      const response = await axios.get(`${API_URL}/api/candidate/${id}`);
 
       setCandidate(response.data);
     } catch (error) {
@@ -90,7 +90,7 @@ function CandidateProfile() {
 
         {candidate.resume ? (
           <a
-            href={`http://localhost:5000/uploads/${candidate.resume}`}
+            href={`${API_URL}/uploads/${candidate.resume}`}
             target="_blank"
             rel="noreferrer"
             className="inline-block mt-2 bg-blue-600 px-5 py-2 rounded-lg hover:bg-blue-700"

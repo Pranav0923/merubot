@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ function Dashboard() {
   // Fetch Candidates
   const fetchCandidates = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/candidates");
+      const response = await axios.get(`${API_URL}/api/candidates`);
 
       setCandidates(response.data);
     } catch (error) {
@@ -51,7 +52,7 @@ function Dashboard() {
   //  delete candidate
   const handleDeleteCandidate = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/candidate/${id}`);
+      await axios.delete(`${API_URL}/api/candidate/${id}`);
 
       fetchCandidates();
     } catch (error) {
@@ -62,7 +63,7 @@ function Dashboard() {
   // candidate status
   const handleStatusChange = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/candidate-status/${id}`, {
+      await axios.put(`${API_URL}/api/candidate-status/${id}`, {
         status,
       });
 
@@ -75,7 +76,7 @@ function Dashboard() {
   //  fetch history
   const fetchHistory = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/history");
+      const response = await axios.get(`${API_URL}/api/history`);
 
       setHistory(response.data);
     } catch (error) {
@@ -86,7 +87,7 @@ function Dashboard() {
   // Add Candidate
   const handleAddCandidate = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/candidate", {
+      const response = await axios.post(`${API_URL}/api/candidate`, {
         name,
         email,
         role,
@@ -122,7 +123,7 @@ function Dashboard() {
       formData.append("resume", resume);
 
       const response = await axios.post(
-        "http://localhost:5000/api/upload-resume",
+        `${API_URL}/api/upload-resume`,
         formData,
       );
 
@@ -150,7 +151,7 @@ function Dashboard() {
       setMessage("Analyzing resume with AI...");
 
       const response = await axios.post(
-        "http://localhost:5000/api/analyze-resume",
+        `${API_URL}/api/analyze-resume`,
         formData,
       );
 
@@ -167,7 +168,7 @@ function Dashboard() {
 
   // download analysis
   const downloadAnalysis = () => {
-    window.open("http://localhost:5000/api/download-analysis", "_blank");
+    window.open(`${API_URL}/api/download-analysis`, "_blank");
   };
 
   // Matching resume
@@ -188,7 +189,7 @@ function Dashboard() {
       setMessage("Matching resume...");
 
       const response = await axios.post(
-        "http://localhost:5000/api/job-match",
+        `${API_URL}/api/job-match`,
         formData,
       );
 
@@ -220,7 +221,7 @@ function Dashboard() {
       setMessage("Generating interview questions...");
 
       const response = await axios.post(
-        "http://localhost:5000/api/interview-questions",
+        `${API_URL}/api/interview-questions`,
         formData,
       );
 
@@ -239,7 +240,7 @@ function Dashboard() {
   const evaluateAnswer = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/evaluate-answer",
+        `${API_URL}/api/evaluate-answer`,
         {
           question: questions,
           answer,
@@ -256,7 +257,7 @@ function Dashboard() {
   const downloadReport = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/download-report",
+        `${API_URL}/api/download-report`,
         {
           candidateName: name || "Candidate",
           analysis,
@@ -286,7 +287,7 @@ function Dashboard() {
   const sendInterviewEmail = async (email, name) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/send-interview-email",
+        `${API_URL}/api/send-interview-email`,
         {
           email,
           name,
@@ -303,7 +304,7 @@ function Dashboard() {
   const saveNotes = async (id, notes) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/candidate/${id}/notes`,
+        `${API_URL}/api/candidate/${id}/notes`,
 
         { notes },
       );
@@ -316,7 +317,7 @@ function Dashboard() {
   const scheduleInterview = async (id, interviewDate, interviewTime) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/candidate/${id}/interview`,
+        `${API_URL}/api/candidate/${id}/interview`,
 
         {
           interviewDate,
@@ -334,7 +335,7 @@ function Dashboard() {
   // export excel
   const exportExcel = () => {
     window.open(
-      "http://localhost:5000/api/export-excel",
+      `${API_URL}/api/export-excel`,
 
       "_blank",
     );

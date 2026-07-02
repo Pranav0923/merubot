@@ -1,58 +1,41 @@
-import { useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [message, setMessage] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSignup = async () => {
-
     try {
+      const response = await axios.post(`${API_URL}/api/signup`, {
+        name,
+        email,
+        password,
+      });
 
-      const response = await axios.post(
-        "http://localhost:5000/api/signup",
-        {
-          name,
-          email,
-          password
-        }
-      )
-
-      setMessage(response.data.message)
+      setMessage(response.data.message);
 
       // Redirect to login
       if (response.data.message === "User registered successfully") {
-
         setTimeout(() => {
-
-          navigate("/login")
-
-        }, 1500)
-
+          navigate("/login");
+        }, 1500);
       }
-
     } catch (error) {
+      console.log(error);
 
-      console.log(error)
-
-      setMessage("Signup failed")
-
+      setMessage("Signup failed");
     }
-
-  }
+  };
 
   return (
-
     <div className="bg-black min-h-screen flex items-center justify-center text-white">
-
       <div className="bg-[#111] p-10 rounded-2xl border border-gray-800 w-[400px]">
-
         <h1 className="text-4xl font-bold text-purple-500 mb-8 text-center">
           Signup
         </h1>
@@ -88,16 +71,10 @@ function Signup() {
           Create Account
         </button>
 
-        <p className="text-green-400 mt-5 text-center">
-          {message}
-        </p>
-
+        <p className="text-green-400 mt-5 text-center">{message}</p>
       </div>
-
     </div>
-
-  )
-
+  );
 }
 
-export default Signup
+export default Signup;

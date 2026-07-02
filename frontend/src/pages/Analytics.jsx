@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Analytics() {
   const [stats, setStats] = useState({});
 
@@ -33,7 +35,7 @@ function Analytics() {
   }, []);
 
   const fetchStats = async () => {
-    const response = await axios.get("http://localhost:5000/api/stats");
+    const response = await axios.get(`${API_URL}/api/stats`);
 
     setStats(response.data);
   };
